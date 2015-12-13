@@ -14,18 +14,24 @@ import com.epam.builder.model.window.WindowEnum;
 
 /**
  * Class is responsible for industrial store construction
+ * 
  * @author Pavel
- *
+ * 
  */
 public class IndustrialStoreBuilder extends BuildingBuilder {
 
+	public IndustrialStoreBuilder() {
+		building = new Building();
+	}
+
 	/**
 	 * Industrial Store construction
+	 * 
 	 * @return
 	 */
 	@Override
 	public Building constructBuilding() {
-		//initial params(materials) for building
+		// initial params(materials) for building
 		int powerOfEngine = 75;
 		int numberOfFloors = 1;
 		Door door = new IndustrialGate(powerOfEngine);
@@ -33,20 +39,34 @@ public class IndustrialStoreBuilder extends BuildingBuilder {
 		Roof roof = new Roof(RoofEnum.FLAT_ROOF);
 		WallEnum wallType = WallEnum.CONCRETE_BLOCK_WALL;
 
-		Building building = new Building();
+		building = new Building();
 		building.setType(BuildingEnum.INDUSTRIAL_STORE);
-		building.buildBase();
+		buildBase();
 
-		building.buildFloor();
-		building.buildWalls(wallType,numberOfFloors);
-		building.installDoors(door,numberOfFloors);
-		building.installWindows(window,numberOfFloors);
+		buildFloor();
+		final String wallInfo = buildWalls(wallType, numberOfFloors);
+		building.addInfoToPassportOfObject(wallInfo);
+
+		final String doorInfo = installDoors(door, numberOfFloors);
+		building.addInfoToPassportOfObject(doorInfo);
+
+		final String windowInfo = installWindows(window, numberOfFloors);
+		building.addInfoToPassportOfObject(windowInfo);
+
 		building.setFloorNumber(numberOfFloors);
 
-		building.buildRoof(roof);
-		building.installHeating();
-		building.installCommunicationInfastructure();
-		building.constructFence();
+		final String roofInfo = buildRoof(roof);
+		building.addInfoToPassportOfObject(roofInfo);
+
+		final String heatingInfo = installHeating();
+		building.addInfoToPassportOfObject(heatingInfo);
+
+		final String communicationInfastructureInfo = installCommunicationInfastructure();
+		building.addInfoToPassportOfObject(communicationInfastructureInfo);
+
+		final String fenceInfo = constructFence();
+		building.addInfoToPassportOfObject(fenceInfo);
+
 		building.finishConstruction(numberOfFloors);
 
 		return building;

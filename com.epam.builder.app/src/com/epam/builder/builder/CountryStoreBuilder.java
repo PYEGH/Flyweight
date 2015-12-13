@@ -11,15 +11,21 @@ import com.epam.builder.model.wall.WallEnum;
 
 /**
  * Class is responsible for country store construction
+ * 
  * @author Pavel
- *
+ * 
  */
 public class CountryStoreBuilder extends BuildingBuilder {
 
+	public CountryStoreBuilder(){
+		building = new Building();
+	}
+	
 	/**
 	 * Country Store construction
+	 * 
 	 * @return
-	 */
+	 */	
 	@Override
 	public Building constructBuilding() {
 		int numberOfLocks = 2;
@@ -28,17 +34,25 @@ public class CountryStoreBuilder extends BuildingBuilder {
 		Roof roof = new Roof(RoofEnum.FLAT_ROOF);
 		WallEnum wallType = WallEnum.WODDEN_WALL;
 
-		Building building = new Building();
 		building.setType(BuildingEnum.VILLAGE_STORE);
-		building.buildBase();
 
-		building.buildFloor();
-		building.buildWalls(wallType,numberOfFloors);
-		building.installDoors(door,numberOfFloors);
+		buildBase();
+		buildFloor();
+
+		final String wallInfo = buildWalls(wallType, numberOfFloors);
+		building.addInfoToPassportOfObject(wallInfo);
+
+		final String doorsInfo = installDoors(door, numberOfFloors);
+		building.addInfoToPassportOfObject(doorsInfo);
+
 		building.setFloorNumber(numberOfFloors);
 
-		building.buildRoof(roof);
-		building.constructFence();
+		final String roofInfo = buildRoof(roof);
+		building.addInfoToPassportOfObject(roofInfo);
+
+		final String fenceInfo = constructFence();
+		building.addInfoToPassportOfObject(fenceInfo);
+
 		building.finishConstruction(numberOfFloors);
 
 		return building;

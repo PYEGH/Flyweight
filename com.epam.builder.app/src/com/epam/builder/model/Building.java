@@ -1,5 +1,6 @@
 package com.epam.builder.model;
 
+import com.epam.builder.flyweight.Flyweight;
 import com.epam.builder.model.door.Door;
 import com.epam.builder.model.door.DoorMaterialEnum;
 import com.epam.builder.model.door.HomeDoor;
@@ -13,7 +14,7 @@ import com.epam.builder.model.window.WindowEnum;
  * @author Pavel
  * 
  */
-public class Building implements Cloneable {
+public class Building implements Cloneable, Flyweight {
 
 	// During the construction passport will be filled with the information
 	// about building
@@ -94,6 +95,7 @@ public class Building implements Cloneable {
 	 * 
 	 * @return
 	 */
+	@Override
 	public String getShortDescription() {
 		final StringBuffer description = new StringBuffer();
 		description.append(" Building type: "
